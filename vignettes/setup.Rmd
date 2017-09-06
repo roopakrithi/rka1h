@@ -18,7 +18,7 @@ After a number of failed attempts, I decided that it works best to create your f
 So, I created, the hagfish function, which is this:
 
 ```
-hagfish_function <- function(love=T){
+hagfish_function <- function (love = T){
   if (love == T){
     print("hagfish need love too")
   }
@@ -126,5 +126,6 @@ hagfish_function(love = F)
 
 ## all the things I messed up
 
-- creating the package using "create" seems to messthings up if I want to create a git Repo.I still haven't figured out why but in the meantime I'll be creating packages in the way outmined above
-- 
+- creating the package using "create" seems to mess things up if I want to create a git Repo.I still haven't figured out why but in the meantime I'll be creating packages in the way outmined above
+- Make sure to re-create the NAMESPACE file using build. 
+- if creating packages using the RStudio "new project" method, make sure that Project options > build tools has all of the devtools and roxygen2 options turned on
