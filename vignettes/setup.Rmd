@@ -11,6 +11,8 @@ vignette: >
 
 ## Steps: 
 
+### 1. Create funtion
+
 After a number of failed attempts, I decided that it works best to create your function first in a blank script, and save it with the name of the function. Save it somewhere you can find it later. 
 
 So, I created, the hagfish function, which is this:
@@ -23,92 +25,106 @@ hagfish_function <- function(love=T){
   else {print ("hagfish are weird")
   }
 }
-```
+``` 
+
+and saved it as "hagfish_function.R"
+
+### 2. Create package
 
 Use new project > new directory > new package to create a package. Make sure to tick "git"
+This package is called rka1k. Eleventh time's the charm. 
 
-it will by default create a "hello" function if you don't tell it to populate the package with an existing function. 
+Note: it will by default create a "hello" function if you don't tell it to populate the package with an existing function. 
 
+### 3. Save function to package
 
-In a new script:
+save a copy of hagfish_function.R to the R folder in rka1k,
 
-Set working directory
-setwd("~/Dropbox/Clark/2017-FALL/R/assignment1/rka1h")
-document()
-?rka1h
-setwd("~/Dropbox/Clark/2017-FALL/R/assignment1")
-install.packages("rka1h")
-?rka1h
-install_github("rkrithivasan/rka1h")
+### 4. Document the function
 
+open hagfish_function.R in the Rstudio project for the package (rka1k.Rproj).
+Add documentation text, that'll be recognized by the "document" function in devtools. I basically used the same text as in the tutorial, with minor edits. So the script now looked like this:
+
+```
+#' A hagfish function
+#'
+#' This function allows you to express your love of hagfish.
+#' @param love Do you love hagfish? Defaults to TRUE.
+#' @keywords hagfish
+#' @export
+#' @examples
+#' hagfish_function()
+
+hagfish_function <- function (love = T){
+  if (love == T){
+    print("hagfish need love too")
+  }
+  else {print ("hagfish are weird")
+  }
+}
+
+```
+Create the documentation:
+
+make sure you have the devtools and roxygen2 packages installed and loaded
+
+```
 library(devtools)
-devtools::install_github("roopakrithi/rka1h")
+library(roxygen2)
+```
 
-devtools::install_github("roopakrithi/rka1h")
+Set working directory to rka1k (if it's not already there), then
+
+```
+document()
+```
+
+Check to make sure this worked:
+
+```
 ?hagfish_function
-hagfish_function(love=T)
-
-setwd("~/Dropbox/Clark/2017-FALL/R/assignment1/rka1h")
-devtools::use_vignette("setup")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+This should pull up the documentation in the help tab.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+### 5. Build the package
 
-## More Examples
+When I created a package using the built-in RStudio options, the NAMESPACE file doesn't contain the right information, so the package isn't recognized as a package if you try to install it. so, I needed to go through the following steps:
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+- first, go into project options, click build tools (left side of the box), turn on "use devtools..." and "generate documentation...", making sure that all of the boxes within "generate documentation..." are clicked on. 
+- delete the namespace file from within the rka1k folder
+- in the build menu (tab next to "Environment" and "History" in the RStudio window), click "build and reload"
+- this should create a functional NAMESPACE file, and confirm that the package works
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+
+### 6. Create repository and commit 
+
+in the git tab, select all of the options under "staged" 
+click commit, add a comment. hit commit again. this should update the repo
+In github, create a new repository called "rka1k"
+Open Shell within RStudio, add the origin, and push what you ahve so far as the master
+
+git remote add origin git@github.com:roopakrithi/rka1k.git
+git push -u origin master
+
+for any subsequent commits to github, 
+git push
+
+### check to see if everthing worked
+
+install the package from github, and see if the function works:
+
+```
+devtools::install_github("roopakrithi/rka1h")
+hagfish_function(love = T)
+hagfish_function(love = F)
+?hagfish_function
 ```
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+
+## all the things I messed up
+
+- creating the package using "create" seems to messthings up if I want to create a git Repo.I still haven't figured out why but in the meantime I'll be creating packages in the way outmined above
+- 
